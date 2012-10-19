@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>add_table</title>
+
+<script src="list.js"></script>
+<script src="jquery-1.8.2.js"></script>
+</head>
+<body>
+
+	<div id="hacker-list">
+		<table border="1">
+			<thead>
+				<tr>
+					<th>use</th>
+					<th>name</th>
+					<th>city</th>
+				</tr>
+			</thead>
+			<tbody class="list">
+				<tr>
+					<td class="use">Java</td>
+					<td class="name">Jonny</td>
+					<td class="city">Stockholm</td>
+				</tr>
+				<tr>
+					<td class="use">C++</td>
+					<td class="name">Jonas</td>
+					<td class="city">Berlin</td>
+				</tr>
+				<tr>
+					<td class="use">C++</td>
+					<td class="name">Amazing</td>
+					<td class="city">London</td>
+				</tr>
+				<tr>
+					<td class="use">Java</td>
+					<td class="name">Excellent</td>
+					<td class="city">Paris</td>
+				</tr>
+			</tbody>
+		</table>
+
+		<table>
+			<tr>
+				<td><input type="text" id="use-field" placeholder="use" /></td>
+				<td><input type="text" id="name-field" placeholder="name" /></td>
+				<td><input type="text" id="city-field" placeholder="city" /></td>
+				<td><button id="add-btn">Add</button></td>
+			</tr>
+		</table>
+
+	</div>
+	<script type="text/javascript">
+		var options = {
+			valueNames : [ 'use', 'name', 'city' ]
+		};
+		var hackerList = new List('hacker-list', options);
+
+		var useField = $('#use-field'),
+			nameField = $('#name-field'),
+			cityField = $('#city-field'),
+			addBtn = $('#add-btn');
+
+		addBtn.click(function() {
+			hackerList.add({
+				use  : useField.val(),
+				name : nameField.val(),
+				city : cityField.val()
+			});
+			clearFields();
+		});
+
+		function clearFields() {
+			useField.val('');
+			nameField.val('');
+			cityField.val('');
+		}
+	</script>
+
+</body>
+</html>
