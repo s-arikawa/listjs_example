@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>clear_btn_table</title>
+
+<script src="list.js"></script>
+<script src="jquery-1.8.2.js"></script>
+</head>
+<body>
+
+	<div id="hacker-list">
+		<table border="1">
+			<thead>
+				<tr>
+					<th>use</th>
+					<th>name</th>
+					<th>city</th>
+				</tr>
+			</thead>
+			<tbody class="list">
+				<tr>
+					<td class="id" style="display:none;">1</td>
+					<td class="use">Java</td>
+					<td class="name">Jonny</td>
+					<td class="city">Stockholm</td>
+					<td><button class="edit-item-btn">Edit</button></td>
+				</tr>
+				<tr>
+					<td class="id" style="display:none;">2</td>
+					<td class="use">C++</td>
+					<td class="name">Jonas</td>
+					<td class="city">Berlin</td>
+					<td><button class="edit-item-btn">Edit</button></td>
+				</tr>
+				<tr>
+					<td class="id" style="display:none;">3</td>
+					<td class="use">C++</td>
+					<td class="name">Amazing</td>
+					<td class="city">London</td>
+					<td><button class="edit-item-btn">Edit</button></td>
+				</tr>
+				<tr>
+					<td class="id" style="display:none;">4</td>
+					<td class="use">Java</td>
+					<td class="name">Excellent</td>
+					<td class="city">Paris</td>
+					<td><button class="edit-item-btn">Edit</button></td>
+				</tr>
+			</tbody>
+		</table>
+
+		<table>
+			<td>
+				<input type="hidden" id="id-field" />
+				<input type="text" id="use-field" placeholder="use" />
+			</td>
+			<td><input type="text" id="name-field" placeholder="name" /></td>
+			<td><input type="text" id="city-field" placeholder="city" /></td>
+			<td>
+				<button id="add-btn">Add</button>
+				<button id="edit-btn">Edit</button>
+				<button id="clear-btn">Clear</button>
+			</td>
+		</table>
+
+	</div>
+	<script type="text/javascript">
+		var options = {
+			valueNames : [ 'id', 'use', 'name', 'city' ]
+		};
+		var hackerList = new List('hacker-list', options);
+
+		var idField = $('#id-field')
+			useField = $('#use-field'),
+			nameField = $('#name-field'),
+			cityField = $('#city-field'),
+			addBtn = $('#add-btn'),
+			editBtn = $('#edit-btn').hide(),
+			editBtns = $('.edit-item-btn'),
+			clearBtn = $('#clear-btn');
+
+		refreshCallbacks();
+
+		addBtn.click(function() {
+			hackerList.add({
+				id   : Math.floor(Math.random()*110000),
+				use  : useField.val(),
+				name : nameField.val(),
+				city : cityField.val()
+			});
+			clearFields();
+			refreshCallbacks();
+		});
+
+		editBtn.click(function() {
+			var item = hackerList.get('id', idField.val());
+			item.values({
+				id : idField.val(),
+				use  : useField.val(),
+				name : nameField.val(),
+				city : cityField.val()
+			});
+			clearFields();
+			editBtn.hide();
+			addBtn.show();
+		});
+
+		clearBtn.click(function(){
+			clearFields();
+			editBtn.hide();
+			addBtn.show();
+		})
+
+		function refreshCallbacks() {
+		// Needed to add new buttons to jQuery-extended object
+			editBtns = $(editBtns.selector);
+
+			editBtns.click(function() {
+				var itemId = $(this).closest('tr').find('.id').text();
+				var itemValues = hackerList.get('id', itemId).values();
+				idField.val(itemValues.id);
+				useField.val(itemValues.use);
+				nameField.val(itemValues.name);
+				cityField.val(itemValues.city);
+
+				editBtn.show();
+				addBtn.hide();
+			});
+		}
+
+		function clearFields() {
+			idField.val('');
+			useField.val('');
+			nameField.val('');
+			cityField.val('');
+		}
+	</script>
+
+</body>
+</html>
