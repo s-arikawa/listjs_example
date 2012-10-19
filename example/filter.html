@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>filter</title>
+
+<script src="list.js"></script>
+<script src="jquery-1.8.2.js"></script>
+</head>
+<body>
+
+	<div id="hacker-list">
+		<table border="1">
+			<tr>
+				<td class="sort" data-sort="name">Sort by name</td>
+				<td class="sort" data-sort="city">Sort by city</td>
+				<th/>
+			</tr>
+			<tr>
+				<td id="filter-none">Show all</td>
+				<td id="filter-java">Only show Java user</td>
+				<td id="filter-cplus">Only show C++ user</td>
+			</tr>
+		</table>
+
+		<table>
+		<thead>
+			<tr>
+				<th>use</th>
+				<th>name</th>
+				<th>city</th>
+			</tr>
+		</thead>
+		<tbody class="list">
+			<tr>
+				<td class="use">Java</td>
+				<td class="name">Jonny</td>
+				<td class="city">Stockholm</td>
+			</tr>
+			<tr>
+				<td class="use">C++</td>
+				<td class="name">Jonas</td>
+				<td class="city">Berlin</td>
+			</tr>
+			<tr>
+				<td class="use">C++</td>
+				<td class="name">Amazing</td>
+				<td class="city">London</td>
+			</tr>
+			<tr>
+				<td class="use">Java</td>
+				<td class="name">Excellent</td>
+				<td class="city">Paris</td>
+			</tr>
+		</tbody>
+		</table>
+	</div>
+	<script type="text/javascript">
+		var options = {
+			valueNames : [ 'use', 'name', 'city' ]
+		};
+		var hackerList = new List('hacker-list', options);
+
+
+		$('#filter-java').click(function() {
+			hackerList.filter(function(item) {
+                if (item.values().use == "Java") {
+                    return true;
+                } else {
+                    return false;
+                }
+            });
+            return false;
+        });
+
+        $('#filter-cplus').click(function() {
+        	hackerList.filter(function(item) {
+                if (item.values().use == "C++") {
+                    return true;
+                } else {
+                    return false;
+                }
+            });
+            return false;
+        });
+        $('#filter-none').click(function() {
+        	hackerList.filter();
+            return false;
+        });
+
+	</script>
+
+</body>
+</html>
